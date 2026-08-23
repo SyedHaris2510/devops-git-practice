@@ -1,0 +1,35 @@
+#yaml
+name: Veroke DevOps Pipeline
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+     
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Display system info
+        run: |
+          echo "Pipeline started by : $GITHUB_ACTOR"
+          echo "Respository: $GITHUB_ACTOR"
+          echo "Branch: $GITHUB_REF_NAME"
+          date
+
+      - name: List repository files
+        run: ls -la
+        
+      - name: Run Health Check
+        run: |
+          echo "=== Veroke Health Check ==="
+          echo "Checking deploy.sh exists..."
+          if [ -f deploy.sh ]; then
+            echo "OK: deploy.sh found"
+          else
+            echo "FAIL: deploy.sh not found"
+          fi
+            echo "Health Check Complete"
+          
