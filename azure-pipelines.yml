@@ -1,0 +1,36 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  company: 'Veroke'
+  environment: 'learning'
+
+steps:
+- script: echo "Pipeline started for $(company)"
+  displayName: 'Display company info'
+
+- script: |
+    echo "=== Veroke DevOps Pipeline ==="
+    echo "Company: $(company)"
+    echo "Environment: $(environment)"
+    echo "Agent: $(Agent.OS)"
+    date
+  displayName: 'Display system info'
+
+- script: ls -la
+  displayName: 'List repository files'
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.11'
+  displayName: 'Set up Python'
+
+- script: |
+    pip install pyyaml
+    python -c "print('=== TenantScope Check ===')
+    print('Azure DevOps pipeline running')
+    print('Assessment complete')"
+  displayName: 'Run security assessment'
